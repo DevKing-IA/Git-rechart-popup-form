@@ -171,3 +171,10 @@
   .message_content{
     background: #2d2f38;
   }
+  .message-inactive{
+    font-size: 16px;
+    color: #666;
+  }
+  .recharts-default-legend{
+    visibility: hidden;
+  }

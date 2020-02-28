@@ -55,13 +55,20 @@ class App extends PureComponent {
     if(including_message){
       let className = 'message-active_' + message_id;
       return (
-        <svg x={x - 12} y={y + 4} width={24} height={24} viewBox="0 0 512 512" fill="#666">
-          <path className={className} d={path} onClick={() => this.handleClick(message, x, y)}/>
-        </svg>
+        <>
+          <svg x={x - 12} y={y + 0} width={24} height={24} viewBox="0 0 512 512" fill="#666">
+            <path className={className} d={path} onClick={() => this.handleClick(message, x, y)}/>
+          </svg>
+          <foreignObject x={x -20} y={y+25} width={124} height={24} fill="#666">
+            <div className="message-inactive">
+              {payload.value}
+            </div>
+          </foreignObject>
+        </>
       );
     }else{
       return (
-        <text x={x -20} y={y+20} width={124} height={24} fill="#666">
+        <text x={x -20} y={y+41} width={124} height={24} fill="#666">
           <tspan className="message-inactive">
             {payload.value}
           </tspan>
@@ -118,7 +125,7 @@ class App extends PureComponent {
           <XAxis dataKey="date" tick ={this.renderCustomAxisTick.bind(this)}/>
           <YAxis />
           <Tooltip />
-          <Legend />
+          <Legend visible={true}/>
           <Line
             type="monotone"
             dataKey="one"
