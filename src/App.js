@@ -21,11 +21,55 @@ const data = [
   { date: "03-03", one: 3490, two: 4300 }
 ];
 
+const date_data = [
+  { date: "02-25", message_id: 1, person: "Andrew", message: "this is test" },
+  { date: "02-26", message_id: 2, person: "Ivan", message: "this is test" },
+  { date: "03-02", message_id: 3, person: "Alex", message: "this is test" }
+]
+
+// message-icon
+const path = 'm74.414 480.548h-36.214l25.607-25.607c13.807-13.807 22.429-31.765 24.747-51.246-59.127-38.802-88.554-95.014-88.554-153.944 0-108.719 99.923-219.203 256.414-219.203 165.785 0 254.682 101.666 254.682 209.678 0 108.724-89.836 210.322-254.682 210.322-28.877 0-59.01-3.855-85.913-10.928-25.467 26.121-59.973 40.928-96.087 40.928z';
+  
+
 class App extends PureComponent {
   // constructor
   constructor(props) {
     super(props);
-    this.state = { xAxis_value: "" };
+    this.state = { xAxis_value: "", message_data:{} };
+  }
+
+  // message icon
+  renderCustomAxisTick = ({ x, y, payload }) => {
+    let including_message = false;
+    var message_id = 0;
+    date_data.forEach(element => {
+      if(element.date === payload.value){
+        including_message = true;
+        message_id = element.message_id;
+      }
+    });
+    if(including_message){
+      let className = 'message-active_' + message_id;
+      return (
+        <svg x={x - 12} y={y + 4} width={24} height={24} viewBox="0 0 512 512" fill="#666">
+          <path className={className} d={path} onClick={this.handleClick}/>
+        </svg>
+      );
+    }else{
+      return (
+        <text x={x -20} y={y+20} width={124} height={24} fill="#666">
+          <tspan className="message-inactive">
+            {payload.value}
+          </tspan>
+        </text>
+      )
+    }
+  };
+
+  handleClick(){
+    //console.log(this.state);
+    console.log("here is message click event");
+    
   }
 
   // when click rechart, getting pointer data of rechart
@@ -34,7 +78,7 @@ class App extends PureComponent {
       return false;
     }
     this.setState({
-      xAxis_value: data.activeLabel
+      xAxis_value: data.activeLabel      
     });
     // open and close popup modal
     $(".overlay").addClass("is-open");
@@ -61,7 +105,7 @@ class App extends PureComponent {
           onClick={this.showTooltipData.bind(this)}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
+          <XAxis dataKey="date" tick ={this.renderCustomAxisTick.bind(this)}/>
           <YAxis />
           <Tooltip />
           <Legend />
@@ -109,4 +153,5 @@ function PopupModal(props) {
     </div>
   );
 }
+
 export default App;
