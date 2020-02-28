@@ -107,8 +107,8 @@
 .close {
     position: relative;
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     overflow: hidden;
   }
   .close:hover::before, .close:hover::after {
@@ -144,4 +144,30 @@
   }
   .date{
       display: none;
+  }
+  /* message note style */
+  .message_note_false{
+    display: none;
+  }
+  .message_note_active{
+    display: block;
+  }
+  .message_title, .message_sender, .message_content{
+    width: 100px;
+    font-size: 12px;
+    padding: 10px;
+    color: white;
+  }
+  .message_title{
+    height: 30px;
+    background: #2d2f38;
+    text-align: center;
+  }
+  .message_sender{
+    height: 30px;
+    background: #2d2f38;
+    opacity: 0.8;
+  }
+  .message_content{
+    background: #2d2f38;
   }
